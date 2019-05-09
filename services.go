@@ -43,3 +43,13 @@ func (p Portainer) populateServicesForEndpoints(endpoints []Endpoint) []Endpoint
 
 	return newEndpoints
 }
+
+func printServicesForEndpoint(endpoint Endpoint) {
+	fmt.Println("Services in " + endpoint.Name)
+	fmt.Println("----")
+
+	for _, s := range endpoint.Services {
+		fmt.Println("Name: " + s.Spec.Name + ", ID: " + s.ID)
+	}
+	fmt.Println("----")
+}

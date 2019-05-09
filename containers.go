@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"strconv"
 )
 
@@ -34,4 +35,14 @@ func (p Portainer) populateContainersForEndpoints(endpoints []Endpoint) []Endpoi
 	}
 
 	return newEndpoints
+}
+
+func printContainersForEndpoint(endpoint Endpoint) {
+	fmt.Println("Containers in " + endpoint.Name)
+	fmt.Println("----")
+
+	for _, c := range endpoint.Containers {
+		fmt.Println("ID: " + c.ID + ", image: " + c.Image)
+	}
+	fmt.Println("----")
 }

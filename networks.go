@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"strconv"
 )
 
@@ -36,4 +37,14 @@ func (p Portainer) populateNetworksForEndpoints(endpoints []Endpoint) []Endpoint
 	}
 
 	return newEndpoints
+}
+
+func printNetworksForEndpoint(endpoint Endpoint) {
+	fmt.Println("Networks in " + endpoint.Name)
+	fmt.Println("----")
+
+	for _, n := range endpoint.Networks {
+		fmt.Println("Name: " + n.Name + ", ID: " + n.ID)
+	}
+	fmt.Println("----")
 }

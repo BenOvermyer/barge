@@ -15,6 +15,16 @@ type Endpoint struct {
 	Services   []Service
 }
 
+func (p Portainer) getEndpoint(id int) Endpoint {
+	output := p.fetch("endpoints/" + strconv.Itoa(id))
+
+	endpoint := Endpoint{}
+
+	json.Unmarshal([]byte(output), &endpoint)
+
+	return endpoint
+}
+
 func (p Portainer) getEndpoints() []Endpoint {
 	output := p.fetch("endpoints")
 
@@ -25,8 +35,9 @@ func (p Portainer) getEndpoints() []Endpoint {
 	return endpoints
 }
 
-func printEndpoints(endpoints []Endpoint) {
-	for _, e := range endpoints {
+func (p Portainer) printEndpoints() {
+	for _, e := range p.Endpoints {
 		fmt.Println(strconv.Itoa(e.ID) + ": " + e.Name + " (" + strconv.Itoa(len(e.Services)) + " services, " + strconv.Itoa(len(e.Containers)) + " containers, " + strconv.Itoa(len(e.Networks)) + " networks)")
 	}
+	fmt.Println("----")
 }
