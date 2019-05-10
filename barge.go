@@ -14,6 +14,8 @@ func main() {
 	showNetworks := flag.Bool("n", false, "Print a list of networks.")
 	showNodes := flag.Bool("N", false, "Print a list of nodes.")
 	showServices := flag.Bool("s", false, "Print a list of services.")
+	showServiceLabels := flag.Bool("sl", false, "Print a list of service labels.")
+	showServiceVariables := flag.Bool("sv", false, "Print a list of service environment variables.")
 	showBrokenServices := flag.Bool("b", false, "Print a list of broken services.")
 	makePublic := flag.Bool("p", false, "Make all targeted resources public.")
 	useVerboseMode := flag.Bool("v", false, "Use verbose mode.")
@@ -64,6 +66,14 @@ func main() {
 
 		if *showServices {
 			printServicesForEndpoint(e)
+		}
+
+		if *showServiceLabels {
+			printServiceLabelsForEndpoint(e)
+		}
+
+		if *showServiceVariables {
+			printServiceVariablesForEndpoint(e)
 		}
 
 		if *showBrokenServices {

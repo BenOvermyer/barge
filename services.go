@@ -17,6 +17,12 @@ type Service struct {
 			}
 			Global string
 		}
+		Labels       map[string]string
+		TaskTemplate struct {
+			ContainerSpec struct {
+				Env []string
+			}
+		}
 	}
 }
 
@@ -79,6 +85,32 @@ func printServicesForEndpoint(endpoint Endpoint) {
 
 	for _, s := range endpoint.Services {
 		fmt.Println("Name: " + s.Spec.Name + ", ID: " + s.ID)
+	}
+	fmt.Println("----")
+}
+
+func printServiceLabelsForEndpoint(endpoint Endpoint) {
+	fmt.Println("Service Labels in " + endpoint.Name)
+	fmt.Println("----")
+
+	for _, s := range endpoint.Services {
+		fmt.Println("+-- Service Name: " + s.Spec.Name + ", ID: " + s.ID)
+		for k, l := range s.Spec.Labels {
+			fmt.Println("   Label: " + k + "=" + l)
+		}
+	}
+	fmt.Println("----")
+}
+
+func printServiceVariablesForEndpoint(endpoint Endpoint) {
+	fmt.Println("Service Enviroment Variables in " + endpoint.Name)
+	fmt.Println("----")
+
+	for _, s := range endpoint.Services {
+		fmt.Println("+-- Service Name: " + s.Spec.Name + ", ID: " + s.ID)
+		for _, ev := range s.Spec.TaskTemplate.ContainerSpec.Env {
+			fmt.Println("   Variable: " + ev)
+		}
 	}
 	fmt.Println("----")
 }
