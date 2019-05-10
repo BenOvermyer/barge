@@ -24,6 +24,7 @@ func main() {
 
 	portainer := NewPortainer()
 	portainer.token = portainer.login()
+
 	if *useVerboseMode {
 		portainer.verbose = true
 	} else {
@@ -47,7 +48,7 @@ func main() {
 
 	portainer.Endpoints = endpoints
 
-	if *showEndpoints {
+	if *showEndpoints || flag.NFlag() == 0 {
 		portainer.printEndpoints()
 	}
 
