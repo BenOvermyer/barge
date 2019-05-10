@@ -8,6 +8,7 @@ type Portainer struct {
 	username  string
 	password  string
 	token     string
+	verbose   bool
 	Endpoints []Endpoint
 }
 

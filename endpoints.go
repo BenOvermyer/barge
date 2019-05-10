@@ -13,6 +13,7 @@ type Endpoint struct {
 	Containers []Container
 	Networks   []Network
 	Services   []Service
+	Tasks      []Task
 }
 
 func (p Portainer) getEndpoint(id int) Endpoint {

@@ -11,6 +11,12 @@ type Service struct {
 	ID   string
 	Spec struct {
 		Name string
+		Mode struct {
+			Replicated struct {
+				Replicas int
+			}
+			Global string
+		}
 	}
 }
 
@@ -42,6 +48,29 @@ func (p Portainer) populateServicesForEndpoints(endpoints []Endpoint) []Endpoint
 	}
 
 	return newEndpoints
+}
+
+func (e Endpoint) getBrokenServices() []Service {
+	services := []Service{}
+
+	for _, s := range e.Services {
+		if e.getServiceTaskStatus(s) == "broken" {
+			services = append(services, s)
+		}
+	}
+
+	return services
+}
+
+func printBrokenServicesForEndpoint(endpoint Endpoint) {
+	brokenServices := endpoint.getBrokenServices()
+
+	fmt.Println("Broken services for " + endpoint.Name)
+	fmt.Println("----")
+
+	for _, s := range brokenServices {
+		fmt.Println(s.Spec.Name + " (" + endpoint.getReplicaStatusForService(s) + ")")
+	}
 }
 
 func printServicesForEndpoint(endpoint Endpoint) {
