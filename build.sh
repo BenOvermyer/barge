@@ -1,2 +1,2 @@
 #!/bin/bash
-go build -o build/barge .
+env GOOS=linux GOARCH=amd64 go build -o build/barge .
