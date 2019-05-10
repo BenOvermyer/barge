@@ -14,6 +14,7 @@ type Endpoint struct {
 	Networks   []Network
 	Services   []Service
 	Tasks      []Task
+	Nodes      []Node
 }
 
 func (p Portainer) getEndpoint(id int) Endpoint {

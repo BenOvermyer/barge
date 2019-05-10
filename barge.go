@@ -12,6 +12,7 @@ func main() {
 	showContainers := flag.Bool("c", false, "Print a list of containers.")
 	showEndpoints := flag.Bool("e", false, "Print a list of endpoints.")
 	showNetworks := flag.Bool("n", false, "Print a list of networks.")
+	showNodes := flag.Bool("N", false, "Print a list of nodes.")
 	showServices := flag.Bool("s", false, "Print a list of services.")
 	showBrokenServices := flag.Bool("b", false, "Print a list of broken services.")
 	makePublic := flag.Bool("p", false, "Make all targeted resources public.")
@@ -39,6 +40,7 @@ func main() {
 	endpoints = portainer.populateServicesForEndpoints(endpoints)
 	endpoints = portainer.populateContainersForEndpoints(endpoints)
 	endpoints = portainer.populateNetworksForEndpoints(endpoints)
+	endpoints = portainer.populateNodesForEndpoints(endpoints)
 	endpoints = portainer.populateTasksForEndpoints(endpoints)
 
 	portainer.Endpoints = endpoints
@@ -54,6 +56,10 @@ func main() {
 
 		if *showNetworks {
 			printNetworksForEndpoint(e)
+		}
+
+		if *showNodes {
+			printNodesForEndpoint(e)
 		}
 
 		if *showServices {
