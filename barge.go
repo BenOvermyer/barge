@@ -27,65 +27,41 @@ func main() {
 		portainer.verbose = false
 	}
 
+	endpoints := []Endpoint{}
+
 	if *endpointID != 0 {
 		endpoint := portainer.getEndpoint(*endpointID)
-		endpoint.Containers = portainer.getContainersForEndpoint(endpoint)
-		endpoint.Networks = portainer.getNetworksForEndpoint(endpoint)
-		endpoint.Services = portainer.getServicesForEndpoint(endpoint)
-		endpoint.Tasks = portainer.getTasksForEndpoint(endpoint)
-
-		endpoints := []Endpoint{}
 		endpoints = append(endpoints, endpoint)
-		portainer.Endpoints = endpoints
+	} else {
+		endpoints = portainer.getEndpoints()
+	}
 
-		if *showEndpoints {
-			portainer.printEndpoints()
-		}
+	endpoints = portainer.populateServicesForEndpoints(endpoints)
+	endpoints = portainer.populateContainersForEndpoints(endpoints)
+	endpoints = portainer.populateNetworksForEndpoints(endpoints)
+	endpoints = portainer.populateTasksForEndpoints(endpoints)
 
+	portainer.Endpoints = endpoints
+
+	if *showEndpoints {
+		portainer.printEndpoints()
+	}
+
+	for _, e := range portainer.Endpoints {
 		if *showContainers {
-			printContainersForEndpoint(portainer.Endpoints[0])
+			printContainersForEndpoint(e)
 		}
 
 		if *showNetworks {
-			printNetworksForEndpoint(portainer.Endpoints[0])
+			printNetworksForEndpoint(e)
 		}
 
 		if *showServices {
-			printServicesForEndpoint(portainer.Endpoints[0])
+			printServicesForEndpoint(e)
 		}
 
 		if *showBrokenServices {
-			printBrokenServicesForEndpoint(portainer.Endpoints[0])
-		}
-	} else {
-		endpoints := portainer.getEndpoints()
-		endpoints = portainer.populateServicesForEndpoints(endpoints)
-		endpoints = portainer.populateContainersForEndpoints(endpoints)
-		endpoints = portainer.populateNetworksForEndpoints(endpoints)
-		endpoints = portainer.populateTasksForEndpoints(endpoints)
-
-		portainer.Endpoints = endpoints
-
-		if *showEndpoints {
-			portainer.printEndpoints()
-		}
-
-		for _, e := range portainer.Endpoints {
-			if *showContainers {
-				printContainersForEndpoint(e)
-			}
-
-			if *showNetworks {
-				printNetworksForEndpoint(e)
-			}
-
-			if *showServices {
-				printServicesForEndpoint(e)
-			}
-
-			if *showBrokenServices {
-				printBrokenServicesForEndpoint(e)
-			}
+			printBrokenServicesForEndpoint(e)
 		}
 	}
 
