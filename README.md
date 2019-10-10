@@ -7,7 +7,7 @@ Barge is a command line tool for viewing multiple Docker Swarms through Portaine
 ### Get Barge
 
 ```bash
-curl -L https://github.com/BenOvermyer/barge/releases/download/0.3.0/barge-linux-amd64 -o barge
+curl -L https://github.com/BenOvermyer/barge/releases/download/0.4.0/barge-linux-amd64 -o barge
 chmod +x barge
 ```
 
